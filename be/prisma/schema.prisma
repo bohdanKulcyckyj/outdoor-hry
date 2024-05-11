@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CREATOR
+  USER
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String?
+  email String @unique
+  password String
+  role Role @default(USER)
+  isAlive Boolean @default(true)
+  photoId Int? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  photo File? @relation(fields: [photoId], references: [id])
+  contract Contract[]
+
+  @@map("users")
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  password String
+  role Role @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageId Int @unique
+
+  image File @relation(fields: [imageId], references: [id])
+  contract Contract[]
+
+  @@map("games")
+}
+
+model File {
+  id Int @id @default(autoincrement())
+  generatedName String
+  originalName String
+  path String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User?
+  game Game?
+  contract Contract?
+
+  @@map("files")
+}
+
+model Contract {
+    id Int @id @default(autoincrement())
+    gameId Int
+    userId Int
+    fileId Int @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+    game Game @relation(fields: [gameId], references: [id])
+    file File @relation(fields: [fileId], references: [id])
+
+    @@map("contracts")
+}
