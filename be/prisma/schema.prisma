@@ -19,9 +19,38 @@ enum Role {
   USER
 }
 
+enum GameDificultness {
+  EASY
+  NORMAL
+  HARD
+}
+
+enum GameState {
+  PENDING
+  FINISHED
+  EXPIRED
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  FULFILLED
+  CANCELED 
+}
+
+model Badge {
+  id Int @id @default(autoincrement())
+  title String
+  minExperience Int
+
+  users User[]
+
+  @@map("badges")
+}
+
 model User {
   id Int @id @default(autoincrement())
-  name String?
+  name String
   email String @unique
   password String
   role Role @default(USER)
@@ -29,9 +58,15 @@ model User {
   photoId Int? @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  experience Int @default(0)
+  coins Int @default(0)
+  badgeId Int
 
+  badge Badge @relation(fields: [badgeId], references: [id])
   photo File? @relation(fields: [photoId], references: [id])
+
   contract Contract[]
+  participations Participant[]
 
   @@map("users")
 }
@@ -39,17 +74,109 @@ model User {
 model Game {
   id Int @id @default(autoincrement())
   title String
-  description String
-  password String
-  role Role @default(USER)
+  description String @db.Text
+  place String
+  dificultness GameDificultness @default(NORMAL)
+  startingCheckpointId Int
+  endingCheckpointId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   imageId Int @unique
+  authorId Int
+  isActive Boolean @default(true)
+  price Int @default(299)
+  maxPoints Int
 
   image File @relation(fields: [imageId], references: [id])
+
+  checkpoints Checkpoint[]
   contract Contract[]
+  gameRecords GameRecord[]
+  tags GameTagsOnGame[]
 
   @@map("games")
+}
+
+model GameTagsOnGame {
+  tagId Int
+  gameId Int
+  tag GameTag @relation(fields: [tagId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@id([tagId, gameId])
+  @@map("game_tags_on_game")
+}
+
+model GameTag {
+  id Int @id @default(autoincrement())
+  label String
+
+  tagConnections GameTagsOnGame[]
+
+  @@map("game_tags")
+}
+
+model Checkpoint {
+  id Int @id @default(autoincrement())
+  gameId Int @unique
+  title String
+  description String
+  imageId Int @unique
+  mapId Int @unique
+  riddle String @db.Text
+  gpsCoordinates String
+  reachDescription String @db.Text
+  maxPoints Int
+  pointsPenalty Int
+  order Int
+
+  image File @relation(fields: [imageId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  gameRecords GameRecord[]
+  hints Hint[]
+
+  @@map("checkpoints")
+}
+
+model Hint {
+  id Int @id @default(autoincrement())
+  checkpointId Int
+  label String
+
+  checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+
+  @@map("hints")
+}
+
+model GameRecord {
+  id Int @id @default(autoincrement())
+  gameId Int
+  state GameState @default(PENDING)
+  team String
+  start DateTime @default(now())
+  finish DateTime?
+  earnedPoints Int @default(0)
+  duration Int @default(0)
+  checkpointId Int
+
+  game Game @relation(fields: [gameId], references: [id])
+  checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+
+  participants Participant[]
+
+  @@map("game_records")
+}
+
+model Participant {
+  userId Int
+  gameRecordId Int
+
+  user User @relation(fields: [userId], references: [id])
+  gameRecord GameRecord @relation(fields: [gameRecordId], references: [id])
+
+  @@id([userId, gameRecordId])
+  @@map("participants")
 }
 
 model File {
@@ -63,12 +190,12 @@ model File {
   user User?
   game Game?
   contract Contract?
+  checkpoint Checkpoint?
 
   @@map("files")
 }
 
 model Contract {
-    id Int @id @default(autoincrement())
     gameId Int
     userId Int
     fileId Int @unique
@@ -79,5 +206,24 @@ model Contract {
     game Game @relation(fields: [gameId], references: [id])
     file File @relation(fields: [fileId], references: [id])
 
+    @@id([gameId, userId, fileId])
     @@map("contracts")
+}
+
+model Invoice {
+  id Int @id @default(autoincrement())
+
+  order Order?
+
+  @@map("invoices")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  invoiceId Int? @unique
+  status OrderStatus @default(CREATED)
+
+  invoice Invoice? @relation(fields: [invoiceId], references: [id])
+
+  @@map("orders")
 }

@@ -3,8 +3,7 @@ import cors from 'cors';
 import rootRouter from "./routes";
 import { PrismaClient } from '@prisma/client';
 import { PORT } from "./secrets";
-import { errorMiddleware } from "./middlewares/errors";
-import { signUpSchema } from "./schema/users";
+import errorMiddleware from "./middlewares/errors";
 
 export const prisma = new PrismaClient({
   log: ['query']

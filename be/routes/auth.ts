@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { errorHandler } from "../errorHandler";
 import { signIn, signUp } from "../controllers/authController";
-import { authMiddleware } from "../middlewares/auth";
+import authMiddleware from "../middlewares/auth";
 
 const router = Router();
 router.post('/signin', errorHandler(signIn))
