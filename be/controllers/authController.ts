@@ -7,6 +7,7 @@ import { BadRequestException } from "../exceptions/badRequest"
 import { ErrorCode } from "../exceptions/root"
 import { NotFoundException } from "../exceptions/notFound"
 import { signUpSchema } from "../schema/users"
+import { InternalException } from "../exceptions/internalExceptions"
 
 export const signIn = async (req: Request, res: Response) => {
     const { email, password } = req.body
@@ -39,11 +40,22 @@ export const signUp = async (req: Request, res: Response) => {
         throw new BadRequestException("User already exists!", ErrorCode.USER_ALREADY_EXISTS)
     }
 
+    const badge = await prisma.badge.findFirst({
+        where: {
+            minExperience: 0
+        }
+    })
+
+    if(!badge) {
+        throw new InternalException("Default Badge has not found!", ErrorCode.SERVER_LOGIC_ERROR, null)
+    }
+
     user = await prisma.user.create({
         data: {
             name,
             email,
-            password: hashSync(password, 10)
+            password: hashSync(password, 10),
+            badgeId: badge.id
         }
     })
 

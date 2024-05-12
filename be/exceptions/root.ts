@@ -1,10 +1,13 @@
+import { ZodError } from "zod";
+import { TError } from "../types/errors";
+
 export class HttpException extends Error {
     message: string;
     errorCode: ErrorCode;
     statusCode: number;
-    errors: any;
+    errors: TError;
 
-    constructor(message: string, errorCode: ErrorCode, statusCode: number, errors: any) {
+    constructor(message: string, errorCode: ErrorCode, statusCode: number, errors: TError) {
         super();
         this.message = message;
         this.errorCode = errorCode;
@@ -19,5 +22,8 @@ export enum ErrorCode {
     INCORRECT_PASSWORD,
     UNPROCESSABLE_ENTITY,
     INTERNAL_EXCEPTION,
-    UNAUTHORIZED
+    UNAUTHORIZED,
+    SERVER_LOGIC_ERROR,
+    SERVER_ERROR,
+    BAD_QUERY_PARAMETER
 }
