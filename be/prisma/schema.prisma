@@ -189,6 +189,7 @@ model GameRecord {
   earnedPoints Int @default(0)
   duration Int @default(0)
   checkpointId Int
+  revealedHints Json?
 
   game Game @relation(fields: [gameId], references: [id])
   checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])

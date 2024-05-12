@@ -6,10 +6,12 @@ import * as jwt from 'jsonwebtoken'
 import { BadRequestException } from "../exceptions/badRequest"
 import { ErrorCode } from "../exceptions/root"
 import { NotFoundException } from "../exceptions/notFound"
-import { signUpSchema } from "../schema/users"
+import { signUpSchema, signInSchema } from "../schema/users"
 import { InternalException } from "../exceptions/internalExceptions"
 
 export const signIn = async (req: Request, res: Response) => {
+    signInSchema.parse(req.body)
+
     const { email, password } = req.body
 
     let user = await prisma.user.findFirst({ where: { email } })

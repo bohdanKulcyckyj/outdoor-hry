@@ -5,10 +5,11 @@ import * as jwt from 'jsonwebtoken'
 import { JWT_SECRET } from "../secrets";
 import { prisma } from "..";
 
-const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization
-    
+const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {    
     try {
+        const authHeader = String(req.headers.authorization || req.headers.Authorization)
+        if(!authHeader?.startsWith('Bearer ')) throw null
+        const token = authHeader.replace("Bearer ", "")
         const payload = jwt.verify(String(token), JWT_SECRET) as any
         const user = await prisma.user.findFirst({
             where: {

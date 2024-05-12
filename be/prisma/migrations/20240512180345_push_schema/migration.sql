@@ -120,6 +120,7 @@ CREATE TABLE `game_records` (
     `earnedPoints` INTEGER NOT NULL DEFAULT 0,
     `duration` INTEGER NOT NULL DEFAULT 0,
     `checkpointId` INTEGER NOT NULL,
+    `revealedHints` JSON NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

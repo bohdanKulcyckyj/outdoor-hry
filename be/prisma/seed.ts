@@ -1,4 +1,5 @@
 import { Role, GameDificultness, GameState, OrderStatus, User } from '@prisma/client';
+import { hashSync } from 'bcrypt';
 import { prisma } from '..';
 
 async function main() {
@@ -28,9 +29,9 @@ async function main() {
   // Creating users
   const users = await prisma.user.createMany({
     data: [
-      { id: 1, name: 'Alice', email: 'alice@example.com', password: 'hashedPassword', role: Role.USER, badgeId: 1 },
-      { id: 2, name: 'Bob', email: 'bob@example.com', password: 'hashedPassword', role: Role.ADMIN, badgeId: 3 },
-      { id: 3, name: 'Charlie', email: 'charlie@example.com', password: 'hashedPassword', role: Role.CREATOR, badgeId: 1 }
+      { id: 1, name: 'Alice', email: 'alice@example.com', password: hashSync("12345", 10), role: Role.USER, badgeId: 1 },
+      { id: 2, name: 'Bob', email: 'bob@example.com', password: hashSync("xxxxx", 10), role: Role.ADMIN, badgeId: 3 },
+      { id: 3, name: 'Charlie', email: 'charlie@example.com', password: hashSync("123456789", 10), role: Role.CREATOR, badgeId: 1 }
     ]
   });
 
