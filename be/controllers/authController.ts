@@ -10,25 +10,28 @@ import { signUpSchema, signInSchema } from "../schema/users"
 import { InternalException } from "../exceptions/internalExceptions"
 
 export const signIn = async (req: Request, res: Response) => {
+    console.log(req.body)
     signInSchema.parse(req.body)
 
-    const { email, password } = req.body
+    const { username: email, password } = req.body
 
     let user = await prisma.user.findFirst({ where: { email } })
 
     if(!user) {
         throw new NotFoundException("User does not exist!", ErrorCode.USER_NOT_FOUND);
     }
+    
     if(!compareSync(password, user.password)) {
         throw new BadRequestException("Incorrect password", ErrorCode.INCORRECT_PASSWORD);
     }
 
     const token = jwt.sign({
         userId: user.id,
-        userEmail: user.email
-    }, JWT_SECRET)
+        userEmail: user.email,
+        userRole: user.role
+    }, JWT_SECRET, { expiresIn: '1h' })
 
-    res.status(200).json({user, token})
+    res.status(200).json({id: user.id, email: user.email, role: user.role, token})
 }
 
 export const signUp = async (req: Request, res: Response) => {
