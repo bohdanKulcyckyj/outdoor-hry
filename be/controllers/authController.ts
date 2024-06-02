@@ -10,8 +10,14 @@ import { signUpSchema, signInSchema } from "../schema/users"
 import { InternalException } from "../exceptions/internalExceptions"
 
 export const signIn = async (req: Request, res: Response) => {
-    console.log(req.body)
-    signInSchema.parse(req.body)
+    const result = signInSchema.safeParse(req.body)
+    if(!result.success) {
+        let zodErrors = {}
+        result.error.issues.forEach((issue) => {
+            zodErrors = {...zodErrors, [issue.path[0]]: issue.message }
+        })
+        return res.status(422).json({errors: zodErrors})
+    }
 
     const { username: email, password } = req.body
 
@@ -35,7 +41,14 @@ export const signIn = async (req: Request, res: Response) => {
 }
 
 export const signUp = async (req: Request, res: Response) => {
-    signUpSchema.parse(req.body)
+    const result = signUpSchema.safeParse(req.body)
+    if(!result.success) {
+        let zodErrors = {}
+        result.error.issues.forEach((issue) => {
+            zodErrors = {...zodErrors, [issue.path[0]]: issue.message }
+        })
+        return res.status(422).json({errors: zodErrors})
+    }
 
     const { email, password, name } = req.body
 
