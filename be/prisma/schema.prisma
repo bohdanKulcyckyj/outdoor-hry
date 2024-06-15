@@ -126,6 +126,7 @@ model Game {
 
   @@map("games")
 
+  @@fulltext([title, place])
   @@fulltext([title])
   @@fulltext([place])
 }

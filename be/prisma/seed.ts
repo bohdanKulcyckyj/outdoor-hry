@@ -1,39 +1,111 @@
-import { Role, GameDificultness, GameState, OrderStatus, User } from '@prisma/client';
-import { hashSync } from 'bcrypt';
-import { prisma } from '..';
+import {
+  Role,
+  GameDificultness,
+  GameState,
+  OrderStatus,
+  User,
+} from '@prisma/client'
+import { hashSync } from 'bcrypt'
+import { prisma } from '..'
 
 async function main() {
   // Creating files
   const files = await prisma.file.createMany({
     data: [
-      { id: 1, generatedName: 'file1.png', originalName: 'original1.png', path: '/uploads/images/file1.png' },
-      { id: 2, generatedName: 'file2.png', originalName: 'original2.png', path: '/uploads/images/file2.png' },
-      { id: 3, generatedName: 'file3.png', originalName: 'original3.png', path: '/uploads/images/file3.png' },
-      { id: 4, generatedName: 'file4.png', originalName: 'original4.png', path: '/uploads/images/file4.png' },
-      { id: 5, generatedName: 'file5.png', originalName: 'original5.png', path: '/uploads/images/file5.png' },
-      { id: 6, generatedName: 'file6.png', originalName: 'original6.png', path: '/uploads/contracts/file6.png' },
-      { id: 7, generatedName: 'file7.png', originalName: 'original7.png', path: '/uploads/images/file7.png' },
-      { id: 8, generatedName: 'file8.png', originalName: 'original8.png', path: '/uploads/images/file8.png' },
-      { id: 9, generatedName: 'file9.png', originalName: 'original9.png', path: '/uploads/images/file9.png' },
-    ]
-  });
+      {
+        id: 1,
+        generatedName: 'file1.png',
+        originalName: 'original1.png',
+        path: '/uploads/images/file1.png',
+      },
+      {
+        id: 2,
+        generatedName: 'file2.png',
+        originalName: 'original2.png',
+        path: '/uploads/images/file2.png',
+      },
+      {
+        id: 3,
+        generatedName: 'file3.png',
+        originalName: 'original3.png',
+        path: '/uploads/images/file3.png',
+      },
+      {
+        id: 4,
+        generatedName: 'file4.png',
+        originalName: 'original4.png',
+        path: '/uploads/images/file4.png',
+      },
+      {
+        id: 5,
+        generatedName: 'file5.png',
+        originalName: 'original5.png',
+        path: '/uploads/images/file5.png',
+      },
+      {
+        id: 6,
+        generatedName: 'file6.png',
+        originalName: 'original6.png',
+        path: '/uploads/contracts/file6.png',
+      },
+      {
+        id: 7,
+        generatedName: 'file7.png',
+        originalName: 'original7.png',
+        path: '/uploads/images/file7.png',
+      },
+      {
+        id: 8,
+        generatedName: 'file8.png',
+        originalName: 'original8.png',
+        path: '/uploads/images/file8.png',
+      },
+      {
+        id: 9,
+        generatedName: 'file9.png',
+        originalName: 'original9.png',
+        path: '/uploads/images/file9.png',
+      },
+    ],
+  })
   // Creating badges
   const badges = await prisma.badge.createMany({
     data: [
       { id: 1, title: 'Bronze Badge', minExperience: 0, imageId: 1 },
       { id: 2, title: 'Silver Badge', minExperience: 500, imageId: 2 },
-      { id: 3, title: 'Gold Badge', minExperience: 1000, imageId: 3 }
-    ]
-  });
+      { id: 3, title: 'Gold Badge', minExperience: 1000, imageId: 3 },
+    ],
+  })
 
   // Creating users
   const users = await prisma.user.createMany({
     data: [
-      { id: 1, name: 'Alice', email: 'alice@example.com', password: hashSync("12345", 10), role: Role.USER, badgeId: 1 },
-      { id: 2, name: 'Bob', email: 'bob@example.com', password: hashSync("xxxxx", 10), role: Role.ADMIN, badgeId: 3 },
-      { id: 3, name: 'Charlie', email: 'charlie@example.com', password: hashSync("123456789", 10), role: Role.CREATOR, badgeId: 1 }
-    ]
-  });
+      {
+        id: 1,
+        name: 'Alice',
+        email: 'alice@example.com',
+        password: hashSync('12345', 10),
+        role: Role.USER,
+        badgeId: 1,
+      },
+      {
+        id: 2,
+        name: 'Bob',
+        email: 'bob@example.com',
+        password: hashSync('xxxxx', 10),
+        role: Role.ADMIN,
+        badgeId: 3,
+      },
+      {
+        id: 3,
+        name: 'Charlie',
+        email: 'charlie@example.com',
+        password: hashSync('123456789', 10),
+        role: Role.CREATOR,
+        badgeId: 1,
+      },
+    ],
+  })
 
   // Creating games
   const games = await prisma.game.createMany({
@@ -50,7 +122,7 @@ async function main() {
         isActive: true,
         price: 299,
         maxPoints: 1000,
-        imageId: 4
+        imageId: 4,
       },
       {
         id: 2,
@@ -64,10 +136,10 @@ async function main() {
         isActive: true,
         price: 399,
         maxPoints: 1500,
-        imageId: 5
-      }
-    ]
-  });
+        imageId: 5,
+      },
+    ],
+  })
 
   // Creating checkpoints
   const checkpoints = await prisma.checkpoint.createMany({
@@ -77,13 +149,13 @@ async function main() {
         title: 'Starting Point',
         description: 'Begin your adventure here!',
         mapId: 1,
-        riddle: 'What has keys but can\'t open locks?',
+        riddle: "What has keys but can't open locks?",
         gpsCoordinates: '40.7128° N, 74.0060° W',
         reachDescription: 'You have reached the starting point.',
         maxPoints: 100,
         pointsPenalty: 0,
         order: 1,
-        imageId: 7
+        imageId: 7,
       },
       {
         gameId: 1,
@@ -96,10 +168,10 @@ async function main() {
         maxPoints: 150,
         pointsPenalty: 10,
         order: 2,
-        imageId: 8
-      }
-    ]
-  });
+        imageId: 8,
+      },
+    ],
+  })
 
   // Creating game records
   const gameRecords = await prisma.gameRecord.createMany({
@@ -112,7 +184,7 @@ async function main() {
         earnedPoints: 0,
         duration: 0,
         checkpointId: 1,
-        inviteCode: "12345abcde"
+        inviteCode: '12345abcde',
       },
       {
         id: 2,
@@ -122,38 +194,36 @@ async function main() {
         earnedPoints: 0,
         duration: 0,
         checkpointId: 2,
-        inviteCode: "abcde12345"
-      }
-    ]
-  });
+        inviteCode: 'abcde12345',
+      },
+    ],
+  })
 
   const participants = await prisma.participant.createMany({
     data: [
       {
         gameRecordId: 1,
-        userId: 1
+        userId: 1,
       },
       {
         gameRecordId: 2,
-        userId: 2
+        userId: 2,
       },
-    ]
+    ],
   })
 
   // Creating contracts
   const contracts = await prisma.contract.createMany({
-    data: [
-      { gameId: 1, userId: 3, fileId: 6 },
-    ]
-  });
+    data: [{ gameId: 1, userId: 3, fileId: 6 }],
+  })
 
   // Creating purchased games
   const purchasedGames = await prisma.purchasedGames.createMany({
     data: [
       { userId: 1, gameId: 1, played: false },
-      { userId: 1, gameId: 2, played: true }
-    ]
-  });
+      { userId: 1, gameId: 2, played: true },
+    ],
+  })
 
   // Creating orders
   const orders = await prisma.order.createMany({
@@ -164,8 +234,8 @@ async function main() {
         fakturoidInvoiceId: 123456,
         total: 299,
         email: 'alice@example.com',
-        products: {"product" : 1},
-        deliveryInfo: {"info": 1}
+        products: { product: 1 },
+        deliveryInfo: { info: 1 },
       },
       {
         userId: 1,
@@ -173,18 +243,41 @@ async function main() {
         fakturoidInvoiceId: 123457,
         total: 399,
         email: 'bob@example.com',
-        products: {"product" : 2},
-        deliveryInfo: {"info": 2}
-      }
-    ]
-  });
+        products: { product: 2 },
+        deliveryInfo: { info: 2 },
+      },
+    ],
+  })
+
+  // Creating tags
+  const tags = await prisma.gameTag.createMany({
+    data: [
+      { id: 1, label: 'pro děti' },
+      { id: 2, label: 'příběhovka' },
+      { id: 3, label: 'horror' },
+      { id: 4, label: '18+' },
+      { id: 5, label: 'naučná' },
+      { id: 6, label: 'pro začátečníky' },
+      { id: 7, label: 'pro pokročilé' },
+    ],
+  })
+
+  // Linking tags to games
+  const gameTagsOnGame = await prisma.gameTagsOnGame.createMany({
+    data: [
+      { tagId: 1, gameId: 1 },
+      { tagId: 2, gameId: 1 },
+      { tagId: 3, gameId: 2 },
+      { tagId: 4, gameId: 2 },
+    ],
+  })
 }
 
 main()
-  .catch(e => {
-    console.error(e);
-    process.exit(1);
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })
