@@ -38,11 +38,15 @@ export const getGames = async (req: Request, res: Response) => {
   }
 
   const searchFilter = {
-        OR: [
-          { title: { search: search as string } },
-          { place: { search: search as string } },
-        ],
-      }
+    OR: [
+      {
+        title: { startsWith: search as string },
+      },
+      {
+        place: { startsWith: search as string },
+      },
+    ],
+  }
 
   const games = await prisma.game.findMany({
     where: {
@@ -62,5 +66,5 @@ export const getGames = async (req: Request, res: Response) => {
     },
   })
 
-  res.status(200).json(paginateData(games, requestedPage, perPage))
+  return res.status(200).json(paginateData(games, requestedPage, perPage))
 }
