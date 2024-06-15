@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -124,6 +125,9 @@ model Game {
   purchases PurchasedGames[]
 
   @@map("games")
+
+  @@fulltext([title])
+  @@fulltext([place])
 }
 
 model GameTagsOnGame {

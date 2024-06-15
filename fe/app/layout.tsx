@@ -10,6 +10,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "OUTDOOR HRY",
@@ -23,16 +25,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="cs">
-      <body>
-        <NextAuthProvider>
-          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
+      <NextAuthProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <body>
+              <Header />
               {children}
-            </ThemeProvider>
-          </AppRouterCacheProvider>
-        </NextAuthProvider>
-      </body>
+              <Footer />
+            </body>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
+      </NextAuthProvider>
     </html>
   );
 }

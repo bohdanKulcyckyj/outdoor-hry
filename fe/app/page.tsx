@@ -16,7 +16,7 @@ const getData = async () => {
 }
 
 const Home = async () => {
-  const session = await getServerSession(authOptions)
+  //const session = await getServerSession(authOptions)
   const paginatedData = await getData()
 
   return (
@@ -29,7 +29,6 @@ const Home = async () => {
           </div>
         ))}
         <LoginForm />
-        <Typography variant="h3">{session ? JSON.stringify(session, null, 2) : "Please sign in"}</Typography>
     </main>
   );
 }

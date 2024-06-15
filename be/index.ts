@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import path from 'path'
 import rootRouter from "./routes";
 import { PrismaClient } from '@prisma/client';
 import { PORT } from "./secrets";
@@ -23,6 +24,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", rootRouter);
+
+app.use('/api/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
+app.use('/api/uploads/contracts', express.static(path.join(__dirname, 'uploads/contracts')));
 
 app.use(errorMiddleware);
 
