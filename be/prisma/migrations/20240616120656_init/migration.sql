@@ -60,6 +60,9 @@ CREATE TABLE `games` (
     `maxPoints` INTEGER NOT NULL,
 
     UNIQUE INDEX `games_imageId_key`(`imageId`),
+    FULLTEXT INDEX `games_title_place_idx`(`title`, `place`),
+    FULLTEXT INDEX `games_title_idx`(`title`),
+    FULLTEXT INDEX `games_place_idx`(`place`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -88,6 +91,7 @@ CREATE TABLE `checkpoints` (
     `imageId` INTEGER NOT NULL,
     `mapId` INTEGER NOT NULL,
     `riddle` TEXT NOT NULL,
+    `answer` JSON NOT NULL,
     `gpsCoordinates` VARCHAR(191) NOT NULL,
     `reachDescription` TEXT NOT NULL,
     `maxPoints` INTEGER NOT NULL,

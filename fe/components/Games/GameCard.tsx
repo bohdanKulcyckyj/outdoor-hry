@@ -13,10 +13,12 @@ import {
   Rating,
   Stack,
   Box,
-  Chip
+  Chip,
+  IconButton,
 } from '@mui/material'
 import PlaceIcon from '@mui/icons-material/Place'
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
@@ -32,7 +34,7 @@ type Props = {
   price: string
   rating: number
   estimateTime: string
-  tags: GameTag[]
+  tags: any //GameTag[]
 }
 
 const GameCard = ({
@@ -47,7 +49,7 @@ const GameCard = ({
   estimateTime,
   tags,
 }: Props) => {
-  console.log(imageURL)
+  console.log(tags)
 
   return (
     <Card>
@@ -55,7 +57,7 @@ const GameCard = ({
         <Link href='/'>
           <CardMedia sx={{ height: 200, position: 'relative' }}>
             <Rating
-              sx={{ position: 'absolute', top: '10px', left: '10px' }}
+              sx={{ position: 'absolute', top: '10px', right: '10px' }}
               value={rating}
               precision={0.5}
               size='small'
@@ -106,7 +108,7 @@ const GameCard = ({
           </CardMedia>
         </Link>
       </CardActionArea>
-      <CardContent sx={{ height: 120 }}>
+      <CardContent>
         <Stack direction='column'>
           <Link href='/'>
             <Typography gutterBottom variant='h6'>
@@ -117,20 +119,32 @@ const GameCard = ({
             {truncateText(description, 80)}
           </Typography>
           <Box display='flex' gap={1} flexWrap='wrap' mt={2}>
-            <Chip size="small" label='Pro děti' color='primary' />
-            <Chip size="small" label='naučná' color='primary' />
+            {tags?.map((_tag) => (
+              <Chip
+                key={_tag?.tag?.id}
+                size='small'
+                label={_tag?.tag?.label}
+                color='primary'
+              />
+            ))}
           </Box>
         </Stack>
       </CardContent>
-      <CardActions
-        sx={{ height: 50, display: 'flex', justifyContent: 'space-between' }}
-      >
-        <Typography variant='body1' color='blue'>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography
+          variant='body1'
+          color='blue'
+          sx={{
+            fontSize: '22px',
+            textTransform: 'uppercase',
+            fontWeight: 'bold',
+          }}
+        >
           {price} Kč
         </Typography>
-        <Button variant='contained' onClick={(e) => e.stopPropagation()}>
-          Koupit
-        </Button>
+        <IconButton>
+          <AddShoppingCartIcon color='primary' />
+        </IconButton>
       </CardActions>
     </Card>
   )

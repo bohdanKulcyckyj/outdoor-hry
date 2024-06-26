@@ -6,7 +6,7 @@ import { ErrorCode } from '../exceptions/root'
 
 export const getGames = async (req: Request, res: Response) => {
   let { page, tags, search } = req.query
-  const perPage = 16
+  const perPage = 6
   let requestedPage = 1
   let gameTags: { id: number; label: string }[] = []
   if (page) {
@@ -62,9 +62,15 @@ export const getGames = async (req: Request, res: Response) => {
     },
     include: {
       image: true,
-      tags: true,
+      tags: {
+        select: {
+          tag: true,
+        },
+      },
     },
   })
+  console.log('requesting games...')
+  console.log(games)
 
   return res.status(200).json(paginateData(games, requestedPage, perPage))
 }

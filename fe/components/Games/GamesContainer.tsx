@@ -18,12 +18,13 @@ const GamesContainer = ({ paginatedData }: Props) => {
         <GameFilters />
       </Grid>
       <Grid item xs={12} md={9}>
-        {/* Game Cards */}
         <GamesList data={paginatedData?.data ?? []} />
-        {/* Pagination */}
-        <Box display='flex' justifyContent='center' pt={3} pb={6}>
-            <ItemsPagination />
-        </Box>
+
+        {paginatedData?.lastPage > 1 && (
+          <Box display='flex' justifyContent='center' pt={3} pb={6}>
+            <ItemsPagination paginationData={paginatedData} />
+          </Box>
+        )}
       </Grid>
     </Grid>
   )

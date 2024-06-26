@@ -158,6 +158,7 @@ model Checkpoint {
   imageId Int @unique
   mapId Int @unique
   riddle String @db.Text
+  answer Json
   gpsCoordinates String
   reachDescription String @db.Text
   maxPoints Int
