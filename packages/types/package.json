@@ -1,0 +1,21 @@
+{
+  "name": "@outdoor-game/types",
+  "version": "1.0.0",
+  "files": [
+    "dist/"
+  ],
+  "description": "",
+  "directories": {
+    "lib": "dist/"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "run -T tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

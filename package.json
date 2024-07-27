@@ -1,0 +1,30 @@
+{
+  "name": "outdoor_unikovka_case_study",
+  "version": "1.0.0",
+  "description": "outdoor unikove hry",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "npm run start --workspace=*",
+    "build": "npm run build --workspace=*",
+    "test": "npm run test --workspace=*",
+    "lint": "npm run lint --workspace=*"
+  },
+  "devDependencies": {
+    "lerna": "^8.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bohdanKulcyckyj/outdoor-hry.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bohdanKulcyckyj/outdoor-hry/issues"
+  },
+  "homepage": "https://github.com/bohdanKulcyckyj/outdoor-hry#readme",
+  "dependencies": {}
+}

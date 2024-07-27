@@ -1,1 +1,0 @@
-export const passwordPattern = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[\W_]).{8,}$/; 

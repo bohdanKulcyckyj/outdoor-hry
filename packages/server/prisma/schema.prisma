@@ -1,0 +1,274 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CREATOR
+  USER
+}
+
+enum GameDificultness {
+  EASY
+  NORMAL
+  HARD
+}
+
+enum GameState {
+  CREATED
+  PENDING
+  FINISHED
+  TIMEOUT
+}
+
+enum OrderStatus {
+  DRAFT
+  CREATED
+  PENDING
+  PAID
+  CANCELED 
+  TIMEOUT
+}
+
+enum PaymentMethods {
+  CARD
+  TRANSFER
+}
+
+model Badge {
+  id Int @id @default(autoincrement())
+  title String
+  minExperience Int
+  imageId Int @unique
+
+  image File @relation(fields: [imageId], references: [id])
+  users User[]
+
+  @@map("badges")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  emailVerified DateTime?
+  password String
+  role Role @default(USER)
+  isAlive Boolean @default(true)
+  photoId Int? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  experience Int @default(0)
+  coins Int @default(0)
+  badgeId Int
+  deliveryInfo Json?
+
+  badge Badge @relation(fields: [badgeId], references: [id])
+  photo File? @relation(fields: [photoId], references: [id])
+
+  contract Contract[]
+  participations Participant[]
+  orders Order[]
+  purchasedGames PurchasedGames[]
+
+  @@map("users")
+}
+
+model PurchasedGames {
+  userId Int
+  gameId Int
+  played Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@id([userId, gameId])
+  @@map("purchased_games")
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  title String @unique
+  slug String @unique
+  description String @db.Text
+  place String
+  dificultness GameDificultness @default(NORMAL)
+  startingCheckpointId Int
+  endingCheckpointId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageId Int @unique
+  authorId Int
+  isActive Boolean @default(true)
+  price Int @default(299)
+  maxPoints Int
+
+  image File @relation(fields: [imageId], references: [id])
+
+  checkpoints Checkpoint[]
+  contract Contract[]
+  gameRecords GameRecord[]
+  tags GameTagsOnGame[]
+  purchases PurchasedGames[]
+
+  @@map("games")
+
+  @@fulltext([title, place])
+  @@fulltext([title])
+  @@fulltext([place])
+}
+
+model GameTagsOnGame {
+  tagId Int
+  gameId Int
+  tag GameTag @relation(fields: [tagId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@id([tagId, gameId])
+  @@map("game_tags_on_game")
+}
+
+model GameTag {
+  id Int @id @default(autoincrement())
+  label String
+
+  tagConnections GameTagsOnGame[]
+
+  @@map("game_tags")
+}
+
+model Checkpoint {
+  id Int @id @default(autoincrement())
+  gameId Int
+  title String
+  description String
+  imageId Int @unique
+  mapId Int @unique
+  riddle String @db.Text
+  answer Json
+  gpsCoordinates String
+  reachDescription String @db.Text
+  maxPoints Int
+  pointsPenalty Int
+  order Int
+
+  image File @relation(fields: [imageId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  gameRecords GameRecord[]
+  hints Hint[]
+
+  @@map("checkpoints")
+}
+
+model Hint {
+  id Int @id @default(autoincrement())
+  checkpointId Int
+  label String
+
+  checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+
+  @@map("hints")
+}
+
+model GameRecord {
+  id Int @id @default(autoincrement())
+  inviteCode String @db.VarChar(10)
+  gameId Int
+  state GameState @default(CREATED)
+  team String
+  start DateTime @default(now())
+  finish DateTime?
+  earnedPoints Int @default(0)
+  duration Int @default(0)
+  checkpointId Int
+  revealedHints Json?
+
+  game Game @relation(fields: [gameId], references: [id])
+  checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+
+  participants Participant[]
+
+  @@map("game_records")
+}
+
+model Participant {
+  userId Int
+  gameRecordId Int
+
+  user User @relation(fields: [userId], references: [id])
+  gameRecord GameRecord @relation(fields: [gameRecordId], references: [id])
+
+  @@id([userId, gameRecordId])
+  @@map("participants")
+}
+
+model File {
+  id Int @id @default(autoincrement())
+  generatedName String
+  originalName String
+  path String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User?
+  game Game?
+  contract Contract?
+  checkpoint Checkpoint?
+  badge Badge?
+
+  @@map("files")
+}
+
+model Contract {
+    gameId Int
+    userId Int
+    fileId Int @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+    game Game @relation(fields: [gameId], references: [id])
+    file File @relation(fields: [fileId], references: [id])
+
+    @@id([gameId, userId, fileId])
+    @@map("contracts")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  orderUuid String @default(uuid())
+  userId Int
+  invoiceId Int? @unique
+  status OrderStatus @default(CREATED)
+  gopayId Int?
+  gatewayUrl String?
+  fakturoidInvoiceId Int
+  hasInvoice Boolean @default(false)
+  emailSent Boolean @default(false)
+  total Int
+  email String
+  products Json
+  deliveryInfo Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}
