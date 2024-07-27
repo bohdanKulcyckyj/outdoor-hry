@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { errorHandler } from "../errorHandler";
-import { getGameTags } from "../controllers/gameTagsController";
+import GameTagsController from "../controllers/gameTags";
 
 const router = Router();
-router.get('/', errorHandler(getGameTags))
+router.get('/', errorHandler(GameTagsController.list))
 
 export { router };

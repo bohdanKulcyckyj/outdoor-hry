@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { errorHandler } from "../errorHandler";
-import { signIn, signUp } from "../controllers/authController";
+import AuthController from "../controllers/auth";
 import authMiddleware from "../middlewares/auth";
 
 const router = Router();
-router.post('/signin', errorHandler(signIn))
-router.post('/signup', errorHandler(signUp))
+router.post('/signin', errorHandler(AuthController.signIn))
+router.post('/signup', errorHandler(AuthController.signUp))
 
 export { router };

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { errorHandler } from "../errorHandler";
-import { get, list } from "../controllers/gameController";
+import GamesController from "../controllers/games";
 
 const router = Router();
-router.get('/', errorHandler(list))
-router.get('/:slug', errorHandler(get))
+router.get('/', errorHandler(GamesController.list))
+router.get('/:slug', errorHandler(GamesController.get))
 
 export { router };
