@@ -20,16 +20,9 @@ export type GameDTO = {
 
   checkpoints?: any[]
   contract?: any[]
-  gameRecords?: any[]
-  tags?: GameTagRelation[]
+  gameSessions?: any[]
+  tags?: GameTag[]
   purchases?: any[]
-}
-
-export type GameTagRelation = {
-  tagId: number
-  gameId: number
-  tag?: GameTag
-  game?: GameDTO
 }
 
 export type GameTag = {

@@ -1,20 +1,28 @@
-"use client"
-import { signIn, useSession } from "next-auth/react";
-import { Button, Typography } from "@mui/material";
+'use client'
+import { signIn, useSession } from 'next-auth/react'
+import { Button, Typography } from '@mui/material'
 
 type Props = {}
 
 export default function LoginForm({}: Props) {
-    const session = useSession()
-    const handleSubmit = async () => {
-        await signIn('credentials', { username: "bob@example.com", password: "xxxxx"});
-    };
+  const session = useSession()
+  const handleSubmit = async () => {
+    await signIn('credentials', {
+      username: 'bob@example.com',
+      password: 'xxxxx',
+    })
+  }
 
-    if(session.status === 'loading') return <h1>Loading...</h1>
-  return (<>
-    <Typography variant="h1">{session?.data ? "Yooo jsi prihlaseny" : "NEsi prihlaseny"}</Typography>
+  if (session.status === 'loading') return <h1>Loading...</h1>
 
-    <Button onClick={handleSubmit}>Sign in</Button>
+  console.log(session)
+  return (
+    <>
+      <Typography variant='h1'>
+        {session?.data ? 'Yooo jsi prihlaseny' : 'NEsi prihlaseny'}
+      </Typography>
+
+      <Button onClick={handleSubmit}>Sign in</Button>
     </>
   )
 }

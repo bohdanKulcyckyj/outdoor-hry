@@ -34,6 +34,7 @@ export const authOptions = {
           token.email = user.email;
           token.role = user.role;
           token.accessToken = user.token;
+          token.refreshToken = user.refreshToken
         }
         console.log(user)
         return token;
@@ -45,6 +46,7 @@ export const authOptions = {
           session.user.email = token.email;
           session.user.role = token.role;
           session.accessToken = token.accessToken;
+          session.refreshToken = token.refreshToken;
         }
         console.log(session)
         return session;

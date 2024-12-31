@@ -13,10 +13,11 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useGameTags } from '@/hooks/useGameTags'
-import * as _ from 'lodash'
+import { times, random } from 'lodash'
+import { GameTag } from '@/types/Game'
 
 const TagSkeletons = () => {
-  const tagWidths = _.times(10, () => _.random(50, 150 + 1))
+  const tagWidths = times(10, () => random(50, 150 + 1))
   return tagWidths.map((_tag, _index) => (
     <Skeleton key={_index} variant='rounded' width={_tag} height={20} />
   ))
@@ -29,6 +30,8 @@ const GameFilters = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { tags, isLoading, isError } = useGameTags()
+
+  console.log(tags)
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -108,7 +111,7 @@ const GameFilters = () => {
           {isLoading ? (
             <TagSkeletons />
           ) : (
-            tags?.map((_item: any) => (
+            tags?.map((_item: GameTag) => (
               <Chip
                 key={_item.id}
                 onClick={() => handleFilterByTag(_item.id.toString())}

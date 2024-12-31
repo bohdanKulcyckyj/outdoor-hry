@@ -34,7 +34,7 @@ type Props = {
   price: string
   rating: number
   estimateTime: string
-  tags: any //GameTag[]
+  tags: GameTag[]
 }
 
 const GameCard = ({
@@ -49,7 +49,6 @@ const GameCard = ({
   estimateTime,
   tags,
 }: Props) => {
-  console.log(tags)
 
   return (
     <Card>
@@ -119,11 +118,11 @@ const GameCard = ({
             {truncateText(description, 80)}
           </Typography>
           <Box display='flex' gap={1} flexWrap='wrap' mt={2}>
-            {tags?.map((_tag) => (
+            {tags?.map((_tag: GameTag) => (
               <Chip
-                key={_tag?.tag?.id}
+                key={_tag.id}
                 size='small'
-                label={_tag?.tag?.label}
+                label={_tag.label}
                 color='primary'
               />
             ))}

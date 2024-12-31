@@ -4,7 +4,7 @@ import {
   positiveIntegerPattern,
 } from '../../../patterns/index'
 
-export const gamesSchema = z.object({
+export const gamesListSchema = z.object({
   page: z
     .string()
     .refine((value) => positiveIntegerPattern.test(value))

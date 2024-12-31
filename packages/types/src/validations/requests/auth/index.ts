@@ -18,12 +18,12 @@ export const signUpSchema = z.object({
 export type TSignUpSchema = z.infer<typeof signUpSchema> 
 
 export const signInSchema = z.object({
-    username: z.string().email("Neplatna emailova adresa"),
+    username: z.string(), //.email("Neplatna emailova adresa"),
     password: z.string()        
-        .min(8, "Heslo musí být alespoň 8 znaků dlouhé")
-        .refine((value) => passwordPattern.test(value), {
-            message: "Heslo musí obsahovat písmena, čislice a speciální znaky"
-        }),
+        //.min(8, "Heslo musí být alespoň 8 znaků dlouhé")
+        //.refine((value) => passwordPattern.test(value), {
+        //    message: "Heslo musí obsahovat písmena, čislice a speciální znaky"
+        //}),
 })
 
 export type TSignInSchema = z.infer<typeof signInSchema>
