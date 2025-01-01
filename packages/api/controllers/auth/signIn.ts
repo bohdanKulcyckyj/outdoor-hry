@@ -7,7 +7,7 @@ import { ErrorCode } from '../../exceptions/root'
 import { signInSchema } from '@outdoor-game/types/src/validations/requests/auth'
 import { validateSchema } from '../../utils/validation'
 import { NotFoundException } from '../../exceptions/not-found'
-import { JWT_SECRET } from '../../secrets'
+import { ACCESS_TOKEN_EXPIRATION_MINUTES, JWT_SECRET } from '../../secrets'
 import { v4 as uuidv4 } from 'uuid'
 
 export const signIn = async (req: Request, res: Response) => {
@@ -27,12 +27,12 @@ export const signIn = async (req: Request, res: Response) => {
       ErrorCode.INCORRECT_PASSWORD,
     )
   }
-
+  const accessTokenExpiration = ACCESS_TOKEN_EXPIRATION_MINUTES * 60 * 1000
   // Generate access token
   const token = jwt.sign(
     { userId: user.id, userEmail: user.email, userRole: user.role },
     JWT_SECRET,
-    { expiresIn: '15m' }, // Short-lived access token
+    { expiresIn: `${ACCESS_TOKEN_EXPIRATION_MINUTES}m` }, // Short-lived access token
   )
 
   // Generate refresh token
@@ -53,6 +53,7 @@ export const signIn = async (req: Request, res: Response) => {
     email: user.email,
     role: user.role,
     token,
+    expiresAt: new Date(Date.now() + accessTokenExpiration),
     refreshToken,
   })
 }

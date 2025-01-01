@@ -7,7 +7,7 @@ import { ErrorCode } from '../../exceptions/root'
 import { signInSchema } from '@outdoor-game/types/src/validations/requests/auth'
 import { validateSchema } from '../../utils/validation'
 import { NotFoundException } from '../../exceptions/not-found'
-import { JWT_SECRET } from '../../secrets'
+import { ACCESS_TOKEN_EXPIRATION_MINUTES, JWT_SECRET } from '../../secrets'
 
 export const refreshAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body
@@ -30,7 +30,7 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
       ErrorCode.NOT_FOUND,
     )
   }
-
+  const accessTokenExpiration = ACCESS_TOKEN_EXPIRATION_MINUTES * 60 * 1000
   // Generate new access token
   const newAccessToken = jwt.sign(
     {
@@ -39,8 +39,13 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
       userRole: tokenRecord.user.role,
     },
     JWT_SECRET,
-    { expiresIn: '15m' },
+    { expiresIn: `${ACCESS_TOKEN_EXPIRATION_MINUTES}m` },
   )
 
-  res.status(200).json({ token: newAccessToken })
+  res
+    .status(200)
+    .json({
+      token: newAccessToken,
+      expiresAt: new Date(Date.now() + accessTokenExpiration),
+    })
 }

@@ -1,4 +1,4 @@
-import { Checkpoint, Game, GameSession, PrismaClient } from '@prisma/client'
+import type { Checkpoint, Game, GameSession, PrismaClient } from '@outdoor-game/data'
 import Mutex from '../../../utils/mutex'
 import { WebSocketHandler } from '../../../utils/socket'
 import {

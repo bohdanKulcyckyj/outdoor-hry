@@ -1,4 +1,4 @@
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const purchasedGames = async () =>
   await prisma.purchasedGames.createMany({

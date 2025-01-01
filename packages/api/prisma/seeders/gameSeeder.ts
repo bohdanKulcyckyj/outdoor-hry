@@ -1,16 +1,16 @@
-import { GameDificultness } from "@prisma/client";
-import { prisma } from "../..";
+import { GameDifficulty } from "@outdoor-game/data"
+import { prisma } from '../../'
 
-export const games = async () =>  {
+export const games = async () => {
   await prisma.game.createMany({
     data: [
       {
         id: 1,
         title: 'Dobrodružná Výprava',
-        slug: "dobrodruzna-vyzva",
+        slug: 'dobrodruzna-vyzva',
         description: 'Napínavé dobrodružství čeká!',
         place: 'Praha',
-        dificultness: GameDificultness.NORMAL,
+        difficultness: GameDifficulty.NORMAL,
         startingCheckpointId: 1,
         endingCheckpointId: 5,
         authorId: 3,
@@ -22,10 +22,10 @@ export const games = async () =>  {
       {
         id: 2,
         title: 'Úniková Výzva',
-        slug: "unikova-vyzva",
+        slug: 'unikova-vyzva',
         description: 'Dokážete uniknout včas?',
         place: 'Brno',
-        dificultness: GameDificultness.HARD,
+        difficultness: GameDifficulty.HARD,
         startingCheckpointId: 1,
         endingCheckpointId: 3,
         authorId: 2,
@@ -37,10 +37,10 @@ export const games = async () =>  {
       {
         id: 3,
         title: 'Záhada Olomouce',
-        slug: "zahada-olomouce",
+        slug: 'zahada-olomouce',
         description: 'Vyřešte záhady Olomouce!',
         place: 'Olomouc',
-        dificultness: GameDificultness.EASY,
+        difficultness: GameDifficulty.EASY,
         startingCheckpointId: 6,
         endingCheckpointId: 10,
         authorId: 4,
@@ -52,10 +52,10 @@ export const games = async () =>  {
       {
         id: 4,
         title: 'Únik ze Strašidelného Domu',
-        slug: "unik-ze-strasidelneho-domu",
+        slug: 'unik-ze-strasidelneho-domu',
         description: 'Únik z strašidelného domu!',
         place: 'Plzeň',
-        dificultness: GameDificultness.NORMAL,
+        difficultness: GameDifficulty.NORMAL,
         startingCheckpointId: 11,
         endingCheckpointId: 15,
         authorId: 3,
@@ -67,10 +67,10 @@ export const games = async () =>  {
       {
         id: 5,
         title: 'Hon za Pokladem',
-        slug: "hon-za-pokladem",
+        slug: 'hon-za-pokladem',
         description: 'Najděte skrytý poklad!',
         place: 'Český Krumlov',
-        dificultness: GameDificultness.NORMAL,
+        difficultness: GameDifficulty.NORMAL,
         startingCheckpointId: 16,
         endingCheckpointId: 20,
         authorId: 5,
@@ -82,10 +82,10 @@ export const games = async () =>  {
       {
         id: 6,
         title: 'Tajemství Staré Prahy',
-        slug: "tajemstvi-stare-prahy",
+        slug: 'tajemstvi-stare-prahy',
         description: 'Objevte tajemství Staré Prahy!',
         place: 'Praha',
-        dificultness: GameDificultness.HARD,
+        difficultness: GameDifficulty.HARD,
         startingCheckpointId: 21,
         endingCheckpointId: 25,
         authorId: 6,
@@ -97,10 +97,10 @@ export const games = async () =>  {
       {
         id: 7,
         title: 'Záhada Brněnského Podzemí',
-        slug: "zahada-brnenskeho-podzemi",
+        slug: 'zahada-brnenskeho-podzemi',
         description: 'Prozkoumejte brněnské podzemí!',
         place: 'Brno',
-        dificultness: GameDificultness.NORMAL,
+        difficultness: GameDifficulty.NORMAL,
         startingCheckpointId: 26,
         endingCheckpointId: 30,
         authorId: 7,
@@ -112,10 +112,10 @@ export const games = async () =>  {
       {
         id: 8,
         title: 'Dobrodružství v Plzni',
-        slug: "dobrodruzstvi-v-plzni",
+        slug: 'dobrodruzstvi-v-plzni',
         description: 'Zažijte dobrodružství v Plzni!',
         place: 'Plzeň',
-        dificultness: GameDificultness.EASY,
+        difficultness: GameDifficulty.EASY,
         startingCheckpointId: 31,
         endingCheckpointId: 35,
         authorId: 8,
@@ -127,10 +127,10 @@ export const games = async () =>  {
       {
         id: 9,
         title: 'Záhada Českého Krumlova',
-        slug: "zahada-ceskeho-krumlova",
+        slug: 'zahada-ceskeho-krumlova',
         description: 'Odhalte záhady Českého Krumlova!',
         place: 'Český Krumlov',
-        dificultness: GameDificultness.HARD,
+        difficultness: GameDifficulty.HARD,
         startingCheckpointId: 36,
         endingCheckpointId: 40,
         authorId: 9,
@@ -142,10 +142,10 @@ export const games = async () =>  {
       {
         id: 10,
         title: 'Olomoucké Dobrodružství',
-        slug: "olomoucke-dobrodruzstvi",
+        slug: 'olomoucke-dobrodruzstvi',
         description: 'Zažijte dobrodružství v Olomouci!',
         place: 'Olomouc',
-        dificultness: GameDificultness.NORMAL,
+        difficultness: GameDifficulty.NORMAL,
         startingCheckpointId: 41,
         endingCheckpointId: 45,
         authorId: 10,
@@ -155,5 +155,5 @@ export const games = async () =>  {
         imageId: 13,
       },
     ],
-  });
+  })
 }

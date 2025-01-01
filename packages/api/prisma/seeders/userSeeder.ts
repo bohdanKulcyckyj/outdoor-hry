@@ -1,6 +1,6 @@
-import { Role } from '@prisma/client'
+import { Role } from '@outdoor-game/data'
 import { hashSync } from 'bcrypt'
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const users = async () => {
   await prisma.user.createMany({

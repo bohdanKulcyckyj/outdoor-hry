@@ -35,8 +35,32 @@ export const authOptions = {
           token.role = user.role;
           token.accessToken = user.token;
           token.refreshToken = user.refreshToken
+          token.expiresAt = user.expiresAt
         }
-        console.log(user)
+
+        if(token.expiresAt && token.expiresAt < Date.now()) {
+          try {
+            const res = await fetch(`${BASE_API_URL}/auth/refresh-token`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ refreshToken: token.refreshToken })
+            });
+            if(!res.ok) {
+              throw new Error('Failed to refresh token')
+            }
+            const { token: newAccessToken, expiresAt} = await res.json();
+
+            return {
+              ...token,
+              expiresAt,
+              accessToken: newAccessToken,
+            }
+          } catch(e: any) {
+            return token
+          }
+
+        }
+
         return token;
       },
       // @ts-ignore

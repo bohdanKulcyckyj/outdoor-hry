@@ -1,5 +1,5 @@
 {
-  "name": "@outdoor-game/server",
+  "name": "@outdoor-game/api",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@outdoor-game/types": "*",
-    "@prisma/client": "^5.17.0",
+    "@outdoor-game/data": "*",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
     "cors": "^2.8.5",

@@ -1,5 +1,5 @@
 import { GameState } from '@prisma/client'
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const gameSessions = async () => {
   await prisma.gameSession.createMany({

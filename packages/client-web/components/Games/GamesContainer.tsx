@@ -15,7 +15,7 @@ type Props = {
 const GamesContainer = ({ paginatedData }: Props) => {
   const session = useSession()
 
-  useEffect(() => {
+  /*useEffect(() => {
     // @ts-ignore
     if (session?.data?.accessToken) {
       // @ts-ignore
@@ -32,7 +32,7 @@ const GamesContainer = ({ paginatedData }: Props) => {
       })
       socket.addEventListener('message', (message) => console.log(JSON.parse(message.data)))
     }
-  }, [session])
+  }, [session])*/
 
   return (
     <Grid container spacing={3}>

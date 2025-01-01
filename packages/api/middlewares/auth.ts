@@ -11,6 +11,7 @@ const authMiddleware = async (
   res: Response,
   next: NextFunction,
 ) => {
+  console.log("AUTH MIDDLEWARE STARTS")
   try {
     const authHeader = String(
       req.headers.authorization || req.headers.Authorization,
@@ -21,7 +22,7 @@ const authMiddleware = async (
     const token = authHeader.replace('Bearer ', '')
     console.log(token)
     const payload = jwt.verify(String(token), JWT_SECRET) as any
-    console.log(payload)
+    console.log("payload", payload)
     const user = await prisma.user.findFirst({
       where: {
         id: payload.userId,

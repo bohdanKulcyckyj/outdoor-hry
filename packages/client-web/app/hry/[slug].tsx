@@ -7,7 +7,7 @@ import { PageSearchParams } from '@/types/next'
 const getData = async (params: PageSearchParams) => {
     const normalizedParams = normalizeParams(params)
     const query = new URLSearchParams(normalizedParams).toString()
-    const { slug } = query
+    // const { slug } = query
     const url = `${api.games.list}?${query}`
     const res = await fetch(url)
     if (!res.ok) {

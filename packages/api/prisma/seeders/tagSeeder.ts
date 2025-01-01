@@ -1,4 +1,4 @@
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const tags = async () => {
   await prisma.gameTag.createMany({

@@ -1,4 +1,4 @@
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const badges = async () =>
   await prisma.badge.createMany({

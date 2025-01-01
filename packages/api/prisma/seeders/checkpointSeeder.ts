@@ -1,4 +1,4 @@
-import { prisma } from '../..'
+import { prisma } from '../../'
 
 export const checkpoints = async () =>
   await prisma.checkpoint.createMany({
@@ -16,7 +16,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 17,
         answer: {
-          "correctAnswers": ['klávesnice']
+          correctAnswers: ['klávesnice'],
         },
       },
       {
@@ -24,7 +24,8 @@ export const checkpoints = async () =>
         title: 'Tajemná Jeskyně',
         description: 'Prozkoumejte hloubky jeskyně.',
         mapId: 18,
-        riddle: 'Čím víc jich berete, tím víc jich zanecháváte za sebou. Co je to?',
+        riddle:
+          'Čím víc jich berete, tím víc jich zanecháváte za sebou. Co je to?',
         gpsCoordinates: '50.0755° N, 14.4378° E',
         reachDescription: 'Dosáhli jste tajemné jeskyně.',
         maxPoints: 150,
@@ -32,7 +33,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 19,
         answer: {
-          "correctAnswers": ['kroky']
+          correctAnswers: ['kroky'],
         },
       },
       {
@@ -48,7 +49,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 21,
         answer: {
-          "correctAnswers": ['knihovna']
+          correctAnswers: ['knihovna'],
         },
       },
       {
@@ -64,7 +65,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 23,
         answer: {
-          "correctAnswers": ['jehla']
+          correctAnswers: ['jehla'],
         },
       },
       {
@@ -80,7 +81,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 25,
         answer: {
-          "correctAnswers": ['houba']
+          correctAnswers: ['houba'],
         },
       },
       {
@@ -96,7 +97,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 27,
         answer: {
-          "correctAnswers": ['postel']
+          correctAnswers: ['postel'],
         },
       },
       {
@@ -112,7 +113,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 29,
         answer: {
-          "correctAnswers": ['čas']
+          correctAnswers: ['čas'],
         },
       },
       {
@@ -128,7 +129,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 31,
         answer: {
-          "correctAnswers": ['řeka']
+          correctAnswers: ['řeka'],
         },
       },
       {
@@ -136,7 +137,8 @@ export const checkpoints = async () =>
         title: 'Skrytá Pláž',
         description: 'Najděte skrytou pláž.',
         mapId: 32,
-        riddle: 'Co je tak křehké, že ho můžete zlomit i vyslovením jeho názvu?',
+        riddle:
+          'Co je tak křehké, že ho můžete zlomit i vyslovením jeho názvu?',
         gpsCoordinates: '48.8105° N, 14.3158° E',
         reachDescription: 'Dosáhli jste skryté pláže.',
         maxPoints: 100,
@@ -144,7 +146,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 33,
         answer: {
-          "correctAnswers": ['ticho']
+          correctAnswers: ['ticho'],
         },
       },
       {
@@ -160,7 +162,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 35,
         answer: {
-          "correctAnswers": ['jehla']
+          correctAnswers: ['jehla'],
         },
       },
       {
@@ -176,7 +178,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 37,
         answer: {
-          "correctAnswers": ['věk']
+          correctAnswers: ['věk'],
         },
       },
       {
@@ -192,7 +194,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 39,
         answer: {
-          "correctAnswers": ['budoucnost']
+          correctAnswers: ['budoucnost'],
         },
       },
       {
@@ -208,7 +210,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 41,
         answer: {
-          "correctAnswers": ['láhev']
+          correctAnswers: ['láhev'],
         },
       },
       {
@@ -224,7 +226,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 43,
         answer: {
-          "correctAnswers": ['led', 'blbec']
+          correctAnswers: ['led', 'blbec'],
         },
       },
       {
@@ -240,7 +242,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 46,
         answer: {
-          "correctAnswers": ['židle', 'stul', 'stůl']
+          correctAnswers: ['židle', 'stul', 'stůl'],
         },
       },
       {
@@ -256,7 +258,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 48,
         answer: {
-          "correctAnswers": ['mutant']
+          correctAnswers: ['mutant'],
         },
       },
       {
@@ -272,7 +274,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 50,
         answer: {
-          "correctAnswers": ['lednička', 'operační systémy', 'os']
+          correctAnswers: ['lednička', 'operační systémy', 'os'],
         },
       },
       {
@@ -288,7 +290,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 52,
         answer: {
-          "correctAnswers": ['jehla', 'blbec']
+          correctAnswers: ['jehla', 'blbec'],
         },
       },
       {
@@ -304,7 +306,7 @@ export const checkpoints = async () =>
         ordering: 1,
         imageId: 54,
         answer: {
-          "correctAnswers": ['pitomec', 'pitomio']
+          correctAnswers: ['pitomec', 'pitomio'],
         },
       },
       {
@@ -320,7 +322,7 @@ export const checkpoints = async () =>
         ordering: 2,
         imageId: 56,
         answer: {
-          "correctAnswers": ['PP', 'Petr Pavel', 'Pavel Petr']
+          correctAnswers: ['PP', 'Petr Pavel', 'Pavel Petr'],
         },
       },
     ],

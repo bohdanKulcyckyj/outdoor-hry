@@ -6,7 +6,10 @@ import { ErrorCode } from '../../exceptions/root'
 import { gamesListSchema } from '@outdoor-game/types/src/validations/requests/games'
 import { validateSchema } from '../../utils/validation'
 
-export const list = async (req: Request, res: Response) => {
+export const list = async (req: Request & { user?: any }, res: Response) => {
+  console.log('user')
+  console.log(req.user)
+
   validateSchema(
     req.query,
     gamesListSchema,
